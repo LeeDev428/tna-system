@@ -74,58 +74,10 @@ export default function InstructorDashboard({ stats, breadcrumbs }: InstructorDa
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Upcoming Evaluations */}
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Upcoming Evaluations
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                                <Calendar className="w-5 h-5 text-yellow-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">Unit 1 Assessment</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">Due: Tomorrow</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                                <Calendar className="w-5 h-5 text-blue-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">Skills Evaluation</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">Due: Next week</p>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+               
 
                 {/* Recent Activity */}
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Recent Activity
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                                <CheckCircle className="w-5 h-5 text-green-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">Completed evaluation #12</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">2 hours ago</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                                <ClipboardCheck className="w-5 h-5 text-purple-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">Started new evaluation #13</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">Yesterday</p>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                
             </div>
 
             {/* Progress Overview */}

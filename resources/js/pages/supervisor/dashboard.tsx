@@ -74,31 +74,7 @@ export default function SupervisorDashboard({ stats, breadcrumbs }: SupervisorDa
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Instructor Activity */}
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Recent Instructor Activity
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <CheckCircle className="w-5 h-5 text-green-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">John Doe completed evaluation</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">1 hour ago</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <Clock className="w-5 h-5 text-yellow-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">Jane Smith started new evaluation</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">3 hours ago</p>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+              
 
                 {/* Pending Tasks */}
                 <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">

@@ -20,11 +20,7 @@ const supervisorNavItems: NavItem[] = [
         href: '/supervisor/evaluations',
         icon: ClipboardCheck,
     },
-    {
-        title: 'Reports',
-        href: '/supervisor/reports',
-        icon: BarChart3,
-    },
+ 
 ];
 
 export function SupervisorSidebar() {

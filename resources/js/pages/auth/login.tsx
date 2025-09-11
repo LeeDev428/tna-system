@@ -23,7 +23,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
             <div className="flex min-h-screen">
                 {/* Left Side - Branding */}
-                <div className="hidden lg:flex lg:w-1/2 lg:flex-col lg:justify-center lg:bg-gradient-to-br lg:from-blue-600 lg:to-indigo-700 lg:px-12">
+                <div className="hidden lg:flex lg:w-1/2 lg:flex-col lg:justify-center lg:bg-gradient-to-br lg:from-blue-600 lg:to-indigo-400 lg:px-12">
                     <div className="text-center text-white">
                         <img 
                             src="/img/tna-logo.png" 

@@ -15,11 +15,7 @@ const instructorNavItems: NavItem[] = [
         href: '/instructor/evaluations',
         icon: ClipboardCheck,
     },
-    {
-        title: 'My Profile',
-        href: '/instructor/profile',
-        icon: User,
-    },
+  
     {
         title: 'Training Materials',
         href: '/instructor/materials',
