@@ -1,19 +1,15 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // User Management Routes
-    Route::get('/users', function () {
-        return inertia('admin/users/index');
-    })->name('users.index');
-    
-    Route::get('/users/create', function () {
-        return inertia('admin/users/create');
-    })->name('users.create');
+    Route::resource('users', UserController::class)->except(['edit', 'update', 'destroy']);
+    Route::patch('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
     
     // Units Management Routes
     Route::get('/units', function () {

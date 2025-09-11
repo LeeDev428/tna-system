@@ -59,13 +59,7 @@ export default function AdminDashboard({ stats, breadcrumbs }: AdminDashboardPro
         <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title="Admin Dashboard" />
             
-            {/* Error Message (as shown in image) */}
-            <div className="mb-6 p-4 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <div className="flex items-center gap-2 text-red-700 dark:text-red-400">
-                    <AlertTriangle className="w-5 h-5" />
-                    <span className="font-medium">Server error 500: failed to load dashboard stats.</span>
-                </div>
-            </div>
+         
 
             {/* Statistics Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -90,32 +84,7 @@ export default function AdminDashboard({ stats, breadcrumbs }: AdminDashboardPro
 
             {/* Additional Dashboard Content */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Recent Activity Card */}
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Recent Activity
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <Users className="w-5 h-5 text-blue-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">New instructor registered</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">2 hours ago</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                                <FileText className="w-5 h-5 text-green-600" />
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900 dark:text-white">Evaluation completed</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">4 hours ago</p>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+              
 
                 {/* Quick Actions Card */}
                 <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
