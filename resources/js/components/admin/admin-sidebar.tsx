@@ -25,16 +25,7 @@ const adminNavItems: NavItem[] = [
         href: '/admin/evaluations',
         icon: Building2,
     },
-    {
-        title: 'Manage Elements',
-        href: '/admin/elements',
-        icon: Layers3,
-    },
-    {
-        title: 'Evaluation Reports',
-        href: '/admin/reports',
-        icon: BarChart3,
-    },
+   
 ];
 
 export function AdminSidebar() {

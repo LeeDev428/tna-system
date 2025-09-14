@@ -16,11 +16,7 @@ const instructorNavItems: NavItem[] = [
         icon: ClipboardCheck,
     },
   
-    {
-        title: 'Training Materials',
-        href: '/instructor/materials',
-        icon: BookOpen,
-    },
+ 
 ];
 
 export function InstructorSidebar() {

@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EvaluationStatusController extends Controller
 {
@@ -157,7 +158,7 @@ class EvaluationStatusController extends Controller
                 $finalCPR = $supervisorResponse->cpr_score;
                 $finalRatings = [
                     'criticality' => $supervisorResponse->criticality_rating,
-                    'competence' => $supervisorResponse->competence_level_rating,
+                    'competence' => $supervisorResponse->competence_rating,
                     'frequency' => $supervisorResponse->frequency_rating,
                     'source' => 'supervisor'
                 ];
@@ -165,7 +166,7 @@ class EvaluationStatusController extends Controller
                 $finalCPR = $instructorResponse->cpr_score;
                 $finalRatings = [
                     'criticality' => $instructorResponse->criticality_rating,
-                    'competence' => $instructorResponse->competence_level_rating,
+                    'competence' => $instructorResponse->competence_rating,
                     'frequency' => $instructorResponse->frequency_rating,
                     'source' => 'instructor'
                 ];
@@ -208,128 +209,26 @@ class EvaluationStatusController extends Controller
     }
 
     /**
-     * Get detailed comparison view of instructor vs supervisor evaluation responses
+     * Get detailed view of evaluation responses
      */
     public function show(EvaluationSession $session)
     {
         $session->load(['evaluationForm.competencyUnits.elements', 'user', 'evaluatedUser']);
-        
-        $evaluationForm = $session->evaluationForm;
-        
-        // Determine instructor and supervisor based on session type
-        if ($session->session_type === 'self') {
-            $instructor = $session->user;
-            // Find supervisor who evaluated this instructor
-            $supervisorResponse = EvaluationResponse::where([
-                'evaluation_form_id' => $session->evaluation_form_id,
-                'evaluated_user_id' => $instructor->id,
-                'response_type' => 'supervisor',
-            ])->first();
-            
-            $supervisor = $supervisorResponse ? User::find($supervisorResponse->user_id) : null;
-        } else {
-            // session_type === 'supervisor'
-            $instructor = $session->evaluatedUser;
-            $supervisor = $session->user;
-        }
 
-        if (!$instructor) {
-            abort(404, 'Instructor not found');
-        }
-
-        // Get instructor self-evaluation responses
-        $instructorResponses = EvaluationResponse::where([
+        $responses = EvaluationResponse::where([
             'evaluation_form_id' => $session->evaluation_form_id,
-            'user_id' => $instructor->id,
-            'response_type' => 'self',
-        ])->with(['competencyElement.competencyUnit'])->get()->keyBy('competency_element_id');
-
-        // Get supervisor evaluation responses
-        $supervisorResponses = collect();
-        if ($supervisor) {
-            $supervisorResponses = EvaluationResponse::where([
-                'evaluation_form_id' => $session->evaluation_form_id,
-                'user_id' => $supervisor->id,
-                'evaluated_user_id' => $instructor->id,
-                'response_type' => 'supervisor',
-            ])->with(['competencyElement.competencyUnit'])->get()->keyBy('competency_element_id');
-        }
-
-        // Build comparison data for each competency element
-        $comparisonData = [];
-        foreach ($evaluationForm->competencyUnits as $unit) {
-            foreach ($unit->elements as $element) {
-                $instructorResponse = $instructorResponses->get($element->id);
-                $supervisorResponse = $supervisorResponses->get($element->id);
-
-                // Calculate final CPR (supervisor takes priority)
-                $finalCPR = 0;
-                $needsTraining = true;
-                $hasDiscrepancy = false;
-
-                if ($supervisorResponse) {
-                    $finalCPR = $supervisorResponse->cpr_score;
-                    $needsTraining = $finalCPR < 21;
-                    
-                    // Check for discrepancy if both responses exist
-                    if ($instructorResponse) {
-                        $hasDiscrepancy = (
-                            $instructorResponse->criticality_rating !== $supervisorResponse->criticality_rating ||
-                            $instructorResponse->competence_rating !== $supervisorResponse->competence_rating ||
-                            $instructorResponse->frequency_rating !== $supervisorResponse->frequency_rating
-                        );
-                    }
-                } elseif ($instructorResponse) {
-                    $finalCPR = $instructorResponse->cpr_score;
-                    $needsTraining = $finalCPR < 21;
-                }
-
-                $comparisonData[] = [
-                    'competency_element_id' => $element->id,
-                    'element_description' => $element->description,
-                    'unit_title' => $unit->title,
-                    'instructor_response' => $instructorResponse ? [
-                        'competency_element_id' => $element->id,
-                        'criticality_rating' => $instructorResponse->criticality_rating,
-                        'competence_rating' => $instructorResponse->competence_rating,
-                        'frequency_rating' => $instructorResponse->frequency_rating,
-                        'cpr_score' => $instructorResponse->cpr_score,
-                    ] : null,
-                    'supervisor_response' => $supervisorResponse ? [
-                        'competency_element_id' => $element->id,
-                        'criticality_rating' => $supervisorResponse->criticality_rating,
-                        'competence_rating' => $supervisorResponse->competence_rating,
-                        'frequency_rating' => $supervisorResponse->frequency_rating,
-                        'cpr_score' => $supervisorResponse->cpr_score,
-                    ] : null,
-                    'final_cpr' => round($finalCPR, 1),
-                    'needs_training' => $needsTraining,
-                    'has_discrepancy' => $hasDiscrepancy,
-                ];
-            }
-        }
+            'user_id' => $session->user_id,
+            'evaluated_user_id' => $session->evaluated_user_id,
+            'response_type' => $session->session_type,
+        ])->with('competencyElement.competencyUnit')->get();
 
         return Inertia::render('admin/evaluations/show', [
-            'evaluation_form' => $evaluationForm,
-            'instructor' => [
-                'id' => $instructor->id,
-                'name' => $instructor->name,
-                'email' => $instructor->email,
-            ],
-            'supervisor' => $supervisor ? [
-                'id' => $supervisor->id,
-                'name' => $supervisor->name,
-                'email' => $supervisor->email,
-            ] : [
-                'id' => 0,
-                'name' => 'Not Assigned',
-                'email' => '',
-            ],
-            'comparison_data' => $comparisonData,
+            'session' => $session,
+            'responses' => $responses,
             'breadcrumbs' => [
                 ['label' => 'Dashboard', 'url' => route('admin.dashboard')],
                 ['label' => 'User Evaluations', 'url' => route('admin.evaluations.index')],
-                ['label' => 'Evaluation Comparison', 'url' => null],
+                ['label' => 'Session Details', 'url' => null],
             ],
         ]);
     }
@@ -379,5 +278,110 @@ class EvaluationStatusController extends Controller
         }
 
         return 0;
+    }
+
+    public function exportPdf($formId, $supervisorId, $instructorId)
+    {
+        // Get the same data as the detailed view
+        $evaluationForm = EvaluationForm::with(['competencyUnits.elements'])->findOrFail($formId);
+        $instructor = User::findOrFail($instructorId);
+        $supervisor = User::findOrFail($supervisorId);
+
+        // Get instructor evaluation responses (self-evaluation)
+        $instructorResponses = EvaluationResponse::where([
+            'evaluation_form_id' => $formId,
+            'user_id' => $instructorId,
+            'response_type' => 'self',
+        ])->with(['competencyElement.competencyUnit'])->get();
+
+        // Get supervisor evaluation responses
+        $supervisorResponses = EvaluationResponse::where([
+            'evaluation_form_id' => $formId,
+            'user_id' => $supervisorId,
+            'evaluated_user_id' => $instructorId,
+            'response_type' => 'supervisor',
+        ])->with(['competencyElement.competencyUnit'])->get();
+
+        // Group responses by competency unit and element
+        $responsesByUnit = [];
+        $allElements = $evaluationForm->competencyUnits->flatMap(function($unit) {
+            return $unit->elements->map(function($element) use ($unit) {
+                return [
+                    'unit_id' => $unit->id,
+                    'unit_title' => $unit->title,
+                    'element_id' => $element->id,
+                    'element_title' => $element->title,
+                ];
+            });
+        });
+
+        foreach ($allElements as $element) {
+            $instructorResponse = $instructorResponses->where('competency_element_id', $element['element_id'])->first();
+            $supervisorResponse = $supervisorResponses->where('competency_element_id', $element['element_id'])->first();
+
+            // Determine final CPR (supervisor takes priority)
+            $finalCPR = 0;
+            $finalRatings = [
+                'criticality' => 0,
+                'competence' => 0,
+                'frequency' => 0,
+                'source' => 'none'
+            ];
+
+            if ($supervisorResponse) {
+                $finalCPR = $supervisorResponse->cpr_score;
+                $finalRatings = [
+                    'criticality' => $supervisorResponse->criticality_rating,
+                    'competence' => $supervisorResponse->competence_rating,
+                    'frequency' => $supervisorResponse->frequency_rating,
+                    'source' => 'supervisor'
+                ];
+            } elseif ($instructorResponse) {
+                $finalCPR = $instructorResponse->cpr_score;
+                $finalRatings = [
+                    'criticality' => $instructorResponse->criticality_rating,
+                    'competence' => $instructorResponse->competence_rating,
+                    'frequency' => $instructorResponse->frequency_rating,
+                    'source' => 'instructor'
+                ];
+            }
+
+            if (!isset($responsesByUnit[$element['unit_id']])) {
+                $responsesByUnit[$element['unit_id']] = [
+                    'unit' => [
+                        'id' => $element['unit_id'],
+                        'title' => $element['unit_title']
+                    ],
+                    'elements' => []
+                ];
+            }
+
+            $responsesByUnit[$element['unit_id']]['elements'][] = [
+                'element' => [
+                    'id' => $element['element_id'],
+                    'title' => $element['element_title']
+                ],
+                'instructor_response' => $instructorResponse,
+                'supervisor_response' => $supervisorResponse,
+                'final_cpr' => $finalCPR,
+                'final_ratings' => $finalRatings,
+                'needs_training' => $finalCPR < 21
+            ];
+        }
+
+        $data = [
+            'evaluationForm' => $evaluationForm,
+            'instructor' => $instructor,
+            'supervisor' => $supervisor,
+            'responsesByUnit' => array_values($responsesByUnit),
+            'exportDate' => now()->format('F d, Y')
+        ];
+
+        $pdf = Pdf::loadView('pdf.evaluation-report', $data);
+        $pdf->setPaper('A4', 'landscape');
+        
+        $filename = 'evaluation-report-' . $instructor->name . '-' . now()->format('Y-m-d') . '.pdf';
+        
+        return $pdf->download($filename);
     }
 }

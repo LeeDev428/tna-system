@@ -11,11 +11,6 @@ const supervisorNavItems: NavItem[] = [
         icon: Home,
     },
     {
-        title: 'My Instructors',
-        href: '/supervisor/instructors',
-        icon: Users,
-    },
-    {
         title: 'Evaluations',
         href: '/supervisor/evaluations',
         icon: ClipboardCheck,

@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::put('/evaluations/{session}/status', [EvaluationStatusController::class, 'updateStatus'])->name('evaluations.update-status');
     Route::get('/evaluations/{session}', [EvaluationStatusController::class, 'show'])->name('evaluations.show');
     Route::get('/evaluations/view/{form}/{instructor}/{supervisor}', [EvaluationStatusController::class, 'viewDetails'])->name('evaluations.view-details');
+    Route::get('/evaluations/export/{form}/{supervisor}/{instructor}', [EvaluationStatusController::class, 'exportPdf'])->name('evaluations.export-pdf');
     
     // Units Management Routes
     Route::get('/units', function () {
