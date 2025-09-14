@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, FileText, Home, LogOut, Settings, Users, Layers3, Building2 } from 'lucide-react';
+import { BarChart3, FileText, Home, LogOut, Settings, Users, Layers3, Building2, ClipboardList } from 'lucide-react';
 
 const adminNavItems: NavItem[] = [
     {
@@ -16,8 +16,13 @@ const adminNavItems: NavItem[] = [
         icon: Users,
     },
     {
-        title: 'Manage Units',
-        href: '/admin/units',
+        title: 'Evaluation Forms',
+        href: '/admin/evaluation-forms',
+        icon: ClipboardList,
+    },
+    {
+        title: 'User Evaluations',
+        href: '/admin/evaluations',
         icon: Building2,
     },
     {

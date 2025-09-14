@@ -46,6 +46,11 @@ class EvaluationForm extends Model
         return $this->hasMany(RatingScaleDescription::class);
     }
 
+    public function evaluationSessions(): HasMany
+    {
+        return $this->hasMany(EvaluationSession::class);
+    }
+
     // Helper method to get criteria by type
     public function getCriteriaByType(string $type): ?RatingCriteria
     {

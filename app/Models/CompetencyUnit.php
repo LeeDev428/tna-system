@@ -27,11 +27,4 @@ class CompetencyUnit extends Model
     {
         return $this->hasMany(CompetencyElement::class)->orderBy('order_index');
     }
-}space App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class CompetencyUnit extends Model
-{
-    //
 }

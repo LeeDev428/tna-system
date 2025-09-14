@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EvaluationController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -11,6 +12,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+    
+    // Evaluation routes for both instructors and supervisors
+    Route::get('evaluations/{id}', [EvaluationController::class, 'showEvaluation'])->name('evaluations.show');
+    Route::post('evaluations/{id}/responses', [EvaluationController::class, 'storeResponses'])->name('evaluations.store');
+    Route::get('api/instructors', [EvaluationController::class, 'getInstructors'])->name('api.instructors');
 });
 
 require __DIR__.'/settings.php';
