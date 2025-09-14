@@ -324,18 +324,7 @@ export default function ComparisonResults({
                     Back to Evaluations
                 </Button>
                 
-                {trainingNeeded > 0 && (
-                    <div className="flex gap-2">
-                        <Button className="bg-orange-600 hover:bg-orange-700 text-white">
-                            <AlertTriangle className="w-4 h-4 mr-2" />
-                            Generate Training Plan
-                        </Button>
-                        <Button variant="outline">
-                            <FileText className="w-4 h-4 mr-2" />
-                            Export Report
-                        </Button>
-                    </div>
-                )}
+              
             </div>
         </SupervisorLayout>
     );

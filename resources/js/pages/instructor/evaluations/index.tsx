@@ -164,10 +164,7 @@ export default function AssessmentIndex({ evaluationForms, breadcrumbs }: Assess
                                             {isCompleted ? (
                                                 <div className="flex gap-2">
                                                     <Link href={`/instructor/evaluations/${form.id}/results`}>
-                                                        <Button variant="outline">
-                                                            <Star className="w-4 h-4 mr-2" />
-                                                            View Results
-                                                        </Button>
+                                                       
                                                     </Link>
                                                     <Button disabled className="bg-gray-300 text-gray-500 cursor-not-allowed">
                                                         <CheckCircle className="w-4 h-4 mr-2" />

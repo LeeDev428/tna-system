@@ -247,8 +247,11 @@ export default function DetailedEvaluationView({
                                             <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
                                                 Final CPR<br/><span className="text-[10px]">Priority</span>
                                             </th>
-                                            <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-gray-300">
                                                 Training<br/><span className="text-[10px]">Status</span>
+                                            </th>
+                                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Training<br/><span className="text-[10px]">Needs</span>
                                             </th>
                                         </tr>
                                     </thead>
@@ -357,7 +360,7 @@ export default function DetailedEvaluationView({
                                                 </td>
 
                                                 {/* Training Status */}
-                                                <td className="px-3 py-4 text-center">
+                                                <td className="px-3 py-4 text-center border-r border-gray-200">
                                                     <div className="flex justify-center">
                                                         {elementData.needs_training ? (
                                                             <Badge variant="destructive" className="text-xs">
@@ -376,6 +379,32 @@ export default function DetailedEvaluationView({
                                                             </Badge>
                                                         )}
                                                     </div>
+                                                </td>
+
+                                                {/* Training Needs */}
+                                                <td className="px-4 py-4 text-sm">
+                                                    {elementData.needs_training && elementData.training_needs && elementData.training_needs.length > 0 ? (
+                                                        <div className="space-y-2">
+                                                            {elementData.training_needs.map((trainingNeed: any, index: number) => (
+                                                                <div key={index} className="bg-yellow-50 border border-yellow-200 rounded-md p-2">
+                                                                    <div className="font-medium text-yellow-800 text-sm">
+                                                                        {trainingNeed.training_title}
+                                                                    </div>
+                                                                    <div className="text-yellow-600 text-xs mt-1">
+                                                                        {trainingNeed.training_type}
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    ) : elementData.needs_training ? (
+                                                        <div className="text-gray-400 text-sm italic">
+                                                            Training needs assessment pending
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-gray-400 text-sm">
+                                                            No training required
+                                                        </div>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}

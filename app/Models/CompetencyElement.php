@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CompetencyElement extends Model
 {
@@ -19,5 +20,10 @@ class CompetencyElement extends Model
     public function competencyUnit(): BelongsTo
     {
         return $this->belongsTo(CompetencyUnit::class);
+    }
+
+    public function trainingNeeds(): HasMany
+    {
+        return $this->hasMany(TrainingNeed::class);
     }
 }

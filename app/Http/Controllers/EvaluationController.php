@@ -74,7 +74,7 @@ class EvaluationController extends Controller
 
         // If supervisor already completed, redirect back
         if ($supervisorSession && $supervisorSession->supervisor_status === 'completed') {
-            return redirect()->route('supervisor.evaluations.comparison', [$evaluationFormId, $instructorId])
+            return redirect()->route('supervisor.evaluations.results', [$evaluationFormId, $instructorId])
                            ->with('info', 'You have already completed this evaluation.');
         }
 
@@ -240,8 +240,14 @@ class EvaluationController extends Controller
                 return redirect()->route('instructor.dashboard')
                     ->with('message', 'Evaluation responses saved successfully!');
             } elseif (request()->routeIs('supervisor.*')) {
-                return redirect()->route('supervisor.dashboard')
-                    ->with('message', 'Evaluation responses saved successfully!');
+                // If supervisor just completed evaluation, redirect to results page
+                if ($responseType === 'supervisor' && $evaluatedUserId) {
+                    return redirect()->route('supervisor.evaluations.results', [$id, $evaluatedUserId])
+                        ->with('message', 'Evaluation completed successfully! Here are the comparison results.');
+                } else {
+                    return redirect()->route('supervisor.dashboard')
+                        ->with('message', 'Evaluation responses saved successfully!');
+                }
             } else {
                 return redirect()->back()
                     ->with('message', 'Evaluation responses saved successfully!');

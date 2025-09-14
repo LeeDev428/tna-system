@@ -76,36 +76,7 @@ export default function SupervisorDashboard({ stats, breadcrumbs }: SupervisorDa
                 {/* Recent Instructor Activity */}
               
 
-                {/* Pending Tasks */}
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Pending Tasks
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                                <div className="flex items-center gap-3">
-                                    <ClipboardCheck className="w-5 h-5 text-yellow-600" />
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">Review evaluations</span>
-                                </div>
-                                <span className="text-xs bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded">
-                                    3 pending
-                                </span>
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                                <div className="flex items-center gap-3">
-                                    <Users className="w-5 h-5 text-blue-600" />
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">Assign new instructors</span>
-                                </div>
-                                <span className="text-xs bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                                    2 pending
-                                </span>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
+              
             </div>
         </SupervisorLayout>
     );

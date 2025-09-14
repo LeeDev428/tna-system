@@ -225,6 +225,7 @@
                     <th colspan="2" style="background-color: #fff3e0;">FREQUENCY OF USE</th>
                     <th colspan="2" style="background-color: #fce4ec;">CPR</th>
                     <th rowspan="2" style="width: 35px; background-color: #f3e5f5;">TRAINING STATUS</th>
+                    <th rowspan="2" style="width: 120px; background-color: #fff9c4;">TRAINING NEEDS</th>
                 </tr>
                 <tr>
                     <th style="width: 25px; background-color: #e3f2fd;">SR</th>
@@ -277,6 +278,22 @@
                     <!-- Training Status -->
                     <td class="{{ $elementData['needs_training'] ? 'training-required' : 'competent' }}">
                         {{ $elementData['needs_training'] ? 'TRAINING REQUIRED' : 'COMPETENT' }}
+                    </td>
+                    
+                    <!-- Training Needs -->
+                    <td style="text-align: left; padding-left: 5px; font-size: 8px;">
+                        @if($elementData['needs_training'] && isset($elementData['training_needs']) && count($elementData['training_needs']) > 0)
+                            @foreach($elementData['training_needs'] as $trainingNeed)
+                                <div style="margin-bottom: 2px; padding: 2px; background-color: #fffbeb; border: 1px solid #fbbf24; border-radius: 2px;">
+                                    <strong>{{ $trainingNeed['training_title'] }}</strong><br>
+                                    <span style="color: #92400e; font-size: 7px;">{{ $trainingNeed['training_type'] }} • {{ $trainingNeed['duration_hours'] }}h</span>
+                                </div>
+                            @endforeach
+                        @elseif($elementData['needs_training'])
+                            <em style="color: #6b7280;">Assessment pending</em>
+                        @else
+                            <span style="color: #9ca3af;">No training required</span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

@@ -80,32 +80,7 @@ export default function InstructorDashboard({ stats, breadcrumbs }: InstructorDa
                 
             </div>
 
-            {/* Progress Overview */}
-            <div className="mt-6">
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            My Progress Overview
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                                <div className="text-2xl font-bold text-green-600 mb-1">85%</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Completion Rate</div>
-                            </div>
-                            <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                                <div className="text-2xl font-bold text-blue-600 mb-1">A-</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Average Grade</div>
-                            </div>
-                            <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                                <div className="text-2xl font-bold text-purple-600 mb-1">{stats.experience_years}</div>
-                                <div className="text-sm text-gray-600 dark:text-gray-400">Years Experience</div>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
+         
         </InstructorLayout>
     );
 }

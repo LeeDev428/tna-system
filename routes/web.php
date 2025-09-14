@@ -8,6 +8,9 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+// Include test routes
+require __DIR__.'/test.php';
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');

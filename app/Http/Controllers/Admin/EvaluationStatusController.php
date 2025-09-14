@@ -107,9 +107,7 @@ class EvaluationStatusController extends Controller
         $instructorId = $request->query('instructor');
         $supervisorId = $request->query('supervisor');
         
-        $evaluationForm = EvaluationForm::with(['competencyUnits.elements'])->findOrFail($formId);
-        $instructor = User::findOrFail($instructorId);
-        $supervisor = User::findOrFail($supervisorId);
+        $evaluationForm = EvaluationForm::with(['competencyUnits.elements.trainingNeeds'])->findOrFail($formId);
         $instructor = User::findOrFail($instructorId);
         $supervisor = User::findOrFail($supervisorId);
 
@@ -191,7 +189,12 @@ class EvaluationStatusController extends Controller
                 'supervisor_response' => $supervisorResponse,
                 'final_cpr' => $finalCPR,
                 'final_ratings' => $finalRatings,
-                'needs_training' => $finalCPR < 21
+                'needs_training' => $finalCPR < 21,
+                'training_needs' => $evaluationForm->competencyUnits
+                    ->flatMap(function($unit) { return $unit->elements; })
+                    ->where('id', $element['element_id'])
+                    ->first()
+                    ?->trainingNeeds ?? collect()
             ];
         }
 
@@ -283,7 +286,7 @@ class EvaluationStatusController extends Controller
     public function exportPdf($formId, $supervisorId, $instructorId)
     {
         // Get the same data as the detailed view
-        $evaluationForm = EvaluationForm::with(['competencyUnits.elements'])->findOrFail($formId);
+        $evaluationForm = EvaluationForm::with(['competencyUnits.elements.trainingNeeds'])->findOrFail($formId);
         $instructor = User::findOrFail($instructorId);
         $supervisor = User::findOrFail($supervisorId);
 
@@ -365,7 +368,12 @@ class EvaluationStatusController extends Controller
                 'supervisor_response' => $supervisorResponse,
                 'final_cpr' => $finalCPR,
                 'final_ratings' => $finalRatings,
-                'needs_training' => $finalCPR < 21
+                'needs_training' => $finalCPR < 21,
+                'training_needs' => $evaluationForm->competencyUnits
+                    ->flatMap(function($unit) { return $unit->elements; })
+                    ->where('id', $element['element_id'])
+                    ->first()
+                    ?->trainingNeeds ?? collect()
             ];
         }
 
