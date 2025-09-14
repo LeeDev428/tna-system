@@ -68,20 +68,20 @@ class RoleUsersSeeder extends Seeder
         ]);
 
         // Create additional test users
-        $supervisor2 = User::create([
-            'name' => 'John Smith',
-            'email' => 'john.supervisor@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => User::ROLE_SUPERVISOR,
-            'is_active' => true,
-            'email_verified_at' => now(),
-        ]);
+        // $supervisor2 = User::create([
+        //     'name' => 'John Smith',
+        //     'email' => 'john.supervisor@gmail.com',
+        //     'password' => Hash::make('password'),
+        //     'role' => User::ROLE_SUPERVISOR,
+        //     'is_active' => true,
+        //     'email_verified_at' => now(),
+        // ]);
 
-        Supervisor::create([
-            'user_id' => $supervisor2->id,
-            'department' => 'Quality Assurance',
-            'assigned_instructors' => [],
-        ]);
+        // Supervisor::create([
+        //     'user_id' => $supervisor2->id,
+        //     'department' => 'Quality Assurance',
+        //     'assigned_instructors' => [],
+        // ]);
 
         $instructor2 = User::create([
             'name' => 'Jane Doe',

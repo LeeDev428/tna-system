@@ -89,21 +89,21 @@ class EvaluationSystemUsersSeeder extends Seeder
     private function createSupervisorUsers()
     {
         $supervisors = [
-            [
-                'name' => 'Juan Dela Cruz',
-                'email' => 'juan.delacruz@tesda.gov.ph',
-                'department' => 'Computer Hardware Servicing',
-            ],
-            [
-                'name' => 'Ana Reyes',
-                'email' => 'ana.reyes@tesda.gov.ph',
-                'department' => 'ICT Training',
-            ],
-            [
-                'name' => 'Roberto Garcia',
-                'email' => 'roberto.garcia@tesda.gov.ph',
-                'department' => 'Technical Training',
-            ],
+            // [
+            //     'name' => 'Juan Dela Cruz',
+            //     'email' => 'juan.delacruz@tesda.gov.ph',
+            //     'department' => 'Computer Hardware Servicing',
+            // ],
+            // [
+            //     'name' => 'Ana Reyes',
+            //     'email' => 'ana.reyes@tesda.gov.ph',
+            //     'department' => 'ICT Training',
+            // ],
+            // [
+            //     'name' => 'Roberto Garcia',
+            //     'email' => 'roberto.garcia@tesda.gov.ph',
+            //     'department' => 'Technical Training',
+            // ],
         ];
 
         foreach ($supervisors as $supervisorData) {
