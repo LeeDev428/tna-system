@@ -8,6 +8,7 @@ use App\Models\Roles\Instructor;
 use App\Models\Roles\Supervisor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -76,6 +77,22 @@ class User extends Authenticatable
     public function instructorProfile(): HasOne
     {
         return $this->hasOne(Instructor::class);
+    }
+
+    /**
+     * Get evaluation responses created by this user (as evaluator)
+     */
+    public function evaluationResponses(): HasMany
+    {
+        return $this->hasMany(EvaluationResponse::class);
+    }
+
+    /**
+     * Get evaluation responses where this user is being evaluated
+     */
+    public function evaluationResponsesAsEvaluated(): HasMany
+    {
+        return $this->hasMany(EvaluationResponse::class, 'evaluated_user_id');
     }
 
     /**
