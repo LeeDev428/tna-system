@@ -85,37 +85,6 @@ export default function AdminDashboard({ stats, breadcrumbs }: AdminDashboardPro
             {/* Additional Dashboard Content */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
-
-                {/* Quick Actions Card */}
-                <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Quick Actions
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-2">
-                            <button className="w-full text-left p-3 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition-colors">
-                                <div className="flex items-center gap-3">
-                                    <Users className="w-5 h-5 text-blue-600" />
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">Add New User</span>
-                                </div>
-                            </button>
-                            <button className="w-full text-left p-3 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg transition-colors">
-                                <div className="flex items-center gap-3">
-                                    <Building2 className="w-5 h-5 text-green-600" />
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">Create Unit</span>
-                                </div>
-                            </button>
-                            <button className="w-full text-left p-3 bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 rounded-lg transition-colors">
-                                <div className="flex items-center gap-3">
-                                    <FileText className="w-5 h-5 text-yellow-600" />
-                                    <span className="text-sm font-medium text-gray-900 dark:text-white">View Reports</span>
-                                </div>
-                            </button>
-                        </div>
-                    </CardContent>
-                </Card>
             </div>
         </AdminLayout>
     );
